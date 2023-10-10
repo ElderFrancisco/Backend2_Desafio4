@@ -1,0 +1,29 @@
+<div>
+  <h1 style='color: #333; text-align: center;'>Productos</h1>
+  <ul
+    style='list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center;'
+  >
+    {{#each productsListParced}}
+      <li
+        class='card'
+        style='width: 300px; margin: 20px; padding: 20px; border: 1px solid #ccc; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; align-items: center; text-align: center;'
+      >
+        <h2 style='color: #333; margin: 0; font-size: 24px;'>{{title}}</h2>
+        <p style='margin: 10px 0;'>Descripción: {{description}}</p>
+        <p style='margin: 10px 0;'>Precio: ${{price}}</p>
+        <p style='margin: 10px 0;'>Código: {{code}}</p>
+        <p style='margin: 10px 0;'>Stock: {{stock}}</p>
+        {{#if thumbnail}}
+          <img
+            src='{{thumbnail}}'
+            alt='{{title}}'
+            width='100'
+            style='max-width: 100%; height: auto;'
+          />
+        {{else}}
+          <p style='margin: 10px 0;'>Imagen no disponible</p>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</div>

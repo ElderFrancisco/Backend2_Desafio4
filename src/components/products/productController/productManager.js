@@ -97,7 +97,7 @@ class ProductManager {
     }
   }
 
-  async updateProduct(id, /*fieldToUpdate, newValue*/ body) {
+  async updateProduct(id, body) {
     try {
       const fieldToUpdate = body.fieldToUpdate;
       const newValue = body.newValue;
