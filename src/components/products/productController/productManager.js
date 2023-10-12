@@ -32,14 +32,14 @@ class ProductManager {
         console.log(
           `El código ${code} coincide con el código ya existente de ${existCode.title}, para agregar el producto debera cambiar su code:${code}`,
         );
-        return {};
+        return null;
       }
 
       if (!title || !description || !price || !category || !code || !stock) {
         console.log(
           `Por favor complete todos los campos solicitados de ${title}`,
         );
-        return {};
+        return null;
       } else {
         const product = {
           id: this.automaticId++,

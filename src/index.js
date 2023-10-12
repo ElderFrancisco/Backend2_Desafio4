@@ -2,13 +2,9 @@ const express = require('express');
 const http = require('http');
 const PORT = 8080;
 const routes = require('./routes');
-// const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const utilSocket = require('./util/socket');
-
-// const ProductManager = require('./components/products/productController/productManager');
-// const productController = new ProductManager('../../../../productos.json');
 
 class Server {
   constructor() {
@@ -16,7 +12,6 @@ class Server {
     this.settings();
     this.routes();
     this.server = http.createServer(this.app);
-    // this.io = null;
     this.utilSocket();
   }
 

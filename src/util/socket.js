@@ -13,7 +13,10 @@ module.exports = (server) => {
 
     socket.on('newProduct', async (product) => {
       const newProduct = await productController.addProduct(product);
-      const caca = await productController.getProducts();
+      if (!newProduct) {
+        console.log('completa los datos');
+      }
+      socket.emit('productos', await productController.getProducts());
     });
   });
 };

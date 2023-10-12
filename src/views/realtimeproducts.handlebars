@@ -10,8 +10,8 @@
   <input type="text" id="categoriaInput" name="categoria" placeholder="categoria" required>
   <button type="submit" id="button">Agregar Producto</button>
 </form>
-<ul id="lista-productos">
-    <li>holas</li>
+<ul id="lista-productos" style="display: flex;flex-wrap: wrap;">
+    
 </ul>
     
     <script src="/socket.io/socket.io.js"></script>
@@ -27,6 +27,10 @@
         productos.forEach(producto => {
             const card = document.createElement('div');
             card.classList.add('card');
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.margin = 10;
+            card.style.border = '1px solid #000'
 
 
             const title = document.createElement('h2');
@@ -77,8 +81,16 @@
       
         socket.emit('newProduct',producto);
 
-    });
+          titleInput.value = "";
+          descriptionInput.value = "";
+          priceInput.value = "";
+          thumbnailInput.value = "";
+          codeInput.value = "";
+          stockInput.value = "";
+          categoriaInput.value = "";
 
+    });
+ 
 
 
     </script>
