@@ -1,20 +1,24 @@
 <div>
 
     <form id="productForm">
-  <input type="text" name="title" placeholder="Título" required>
-  <input type="text" name="description" placeholder="Descripción" required>
-  <input type="number" name="price" placeholder="Precio" required>
-  <button type="submit">Agregar Producto</button>
+  <input type="text" id="titleInput" name="title" placeholder="Título" required>
+  <input type="text" id="descriptionInput" name="description" placeholder="Descripción" required>
+  <input type="number" id="priceInput" name="price" placeholder="Precio" required>
+  <input type="text" id="thumbnailInput" name="thumbnail" placeholder="thumbnail" required>
+  <input type="text" id="codeInput" name="code" placeholder="code" required>
+  <input type="number" id="stockInput" name="stock" placeholder="stock" required>
+  <input type="text" id="categoriaInput" name="categoria" placeholder="categoria" required>
+  <button type="submit" id="button">Agregar Producto</button>
 </form>
 <ul id="lista-productos">
-    
+    <li>holas</li>
 </ul>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
  
-            socket.on('productos', (productos) => {
+        socket.on('productos', (productos) => {
         const listaProductos = document.getElementById('lista-productos');
         console.log(productos)
         
@@ -49,14 +53,33 @@
         });
         });
 
-       
+        document.getElementById("productForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevenir el envío del formulario
+
+      // Obtener los valores de los campos del formulario
+      const title = document.getElementById("titleInput").value;
+      const description = document.getElementById("descriptionInput").value;
+      const price = parseFloat(document.getElementById("priceInput").value);
+      const thumbnail = document.getElementById("thumbnailInput").value;
+      const code = document.getElementById("codeInput").value;
+      const stock = parseInt(document.getElementById("stockInput").value);
+      const categoria = document.getElementById("categoriaInput").value;
+      
+      const producto = {
+        title: title,
+        description: description,
+        price: price,
+        thumbnail: thumbnail,
+        code: code,
+        stock: stock,
+        category:categoria
+      };
+      
+        socket.emit('newProduct',producto);
+
+    });
 
 
 
-      const agregarProducto = document.getElementById('agregar-producto');
-      agregarProducto.addEventListener('click', () => {
-        const nuevoProducto = document.getElementById('nuevo-producto').value;
-        socket.emit('agregarProducto', nuevoProducto);
-      });
     </script>
 </div>

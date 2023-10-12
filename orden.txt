@@ -1,0 +1,9 @@
+1)agarrar datos de formulario
+
+2)enviarlos por emit
+
+3)agarrarlos y enviarlos al pm
+
+4)el pm devuelve y se llama denuevo a emit.productos
+
+5)vaciar la lista de productos y volver a correr

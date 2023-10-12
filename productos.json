@@ -169,5 +169,16 @@
     "thumbnail": "link",
     "code": "lolaaa",
     "stock": 1
+  },
+  {
+    "id": 20,
+    "title": "wdasdwa",
+    "description": "dasdw",
+    "code": "wewew",
+    "price": 232312311,
+    "status": true,
+    "stock": 676765,
+    "category": "basdwa",
+    "thumbnail": []
   }
 ]
