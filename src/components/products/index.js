@@ -15,8 +15,8 @@ module.exports = (app) => {
     try {
       const limit = parseInt(req.query.limit);
       const productsList = await productController.getProducts(limit);
-      const productsListParced = JSON.parse(productsList);
-      res.send(productsListParced);
+      console.log(productsList);
+      res.send(productsList);
     } catch (error) {
       console.log(error);
     }
@@ -27,8 +27,7 @@ module.exports = (app) => {
       const paramsID = parseInt(req.params.pid);
       const productId = await productController.getProductById(paramsID);
       if (productId) {
-        const productIDParced = JSON.parse(productId);
-        return res.send(productIDParced);
+        return res.send(productId);
       }
       return res.send('no se econtro el producto con el ' + paramsID);
     } catch (error) {

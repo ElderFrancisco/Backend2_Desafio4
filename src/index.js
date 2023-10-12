@@ -2,12 +2,13 @@ const express = require('express');
 const http = require('http');
 const PORT = 8080;
 const routes = require('./routes');
-const socketIO = require('socket.io');
+// const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
-const ProductManager = require('./components/products/productController/productManager');
+const utilSocket = require('./util/socket');
 
-const productController = new ProductManager('../../../../productos.json');
+// const ProductManager = require('./components/products/productController/productManager');
+// const productController = new ProductManager('../../../../productos.json');
 
 class Server {
   constructor() {
@@ -15,8 +16,8 @@ class Server {
     this.settings();
     this.routes();
     this.server = http.createServer(this.app);
-    this.io = null;
-    this.initializeSocket();
+    // this.io = null;
+    this.utilSocket();
   }
 
   settings() {
@@ -34,31 +35,8 @@ class Server {
     routes(this.app);
   }
 
-  initializeSocket() {
-    this.io = socketIO(this.server);
-
-    this.io.on('connection', (socket) => {
-      console.log('Cliente conectado');
-
-      productController
-        .getProducts()
-        .then((products) => {
-          socket.emit('initial products', products);
-
-          socket.on('new product', (newProduct) => {
-            console.log('Nuevo producto recibido:', newProduct);
-            this.io.emit('new product', newProduct);
-          });
-
-          socket.on('delete product', (productId) => {
-            console.log('Nuevo producto eliminado:', productId);
-            this.io.emit('delete product', productId);
-          });
-        })
-        .catch((error) => {
-          console.log(`[ERROR] -> ${error}`);
-        });
-    });
+  utilSocket() {
+    utilSocket(this.server);
   }
 
   listen() {

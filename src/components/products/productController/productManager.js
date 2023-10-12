@@ -73,11 +73,10 @@ class ProductManager {
 
       if (limit) {
         const productsListLimit = this.productos.slice(0, limit);
-        let text = JSON.stringify(productsListLimit, null, 2);
-        return text;
+        return productsListLimit;
       }
-      let text = JSON.stringify(this.productos, null, 2);
-      return text;
+
+      return this.productos;
     } catch (error) {
       console.log(error);
     }
@@ -89,8 +88,7 @@ class ProductManager {
       if (!productExistent) {
         return null;
       } else {
-        let text = JSON.stringify(productExistent, null, 2);
-        return text;
+        return productExistent;
       }
     } catch (error) {
       console.log(error);

@@ -1,101 +1,62 @@
 <div>
-        <h1>Real Time Products</h1>
 
-    <input type="text" id="product-name-input" placeholder="Nombre del producto">
-    <button id="add-product-button">Agregar Producto</button> 
-
-    <ul id="product-list">
-        {{#each products}}
-        <li>
-            <span>{{this.title}}</span>
-        </li>
-        {{/each}}
-    </ul>
-
-
-
+    <form id="productForm">
+  <input type="text" name="title" placeholder="Título" required>
+  <input type="text" name="description" placeholder="Descripción" required>
+  <input type="number" name="price" placeholder="Precio" required>
+  <button type="submit">Agregar Producto</button>
+</form>
+<ul id="lista-productos">
+    
+</ul>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io();
-        console.log(socket)
+      const socket = io();
+ 
+            socket.on('productos', (productos) => {
+        const listaProductos = document.getElementById('lista-productos');
+        console.log(productos)
+        
+        listaProductos.innerHTML = '';
+        
+        productos.forEach(producto => {
+            const card = document.createElement('div');
+            card.classList.add('card');
 
-        socket.on('initial products', (products) => {
-            renderProducts(products);
+
+            const title = document.createElement('h2');
+            title.textContent = producto.title;
+
+            const description = document.createElement('p');
+            description.textContent = producto.description;
+
+            const price = document.createElement('p');
+            price.textContent = `Precio: ${producto.price} USD`;
+
+            const stock = document.createElement('p');
+            stock.textContent = `Stock: ${producto.stock}`;
+
+            // Agrega elementos a la tarjeta
+            card.appendChild(title);
+            card.appendChild(description);
+            card.appendChild(price);
+            card.appendChild(stock);
+          
+
+            // Agrega la tarjeta a la lista de productos
+            listaProductos.appendChild(card);
+        });
         });
 
-        function renderProducts(products) {
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '';
-
-            products.forEach((product) => {
-                const listItem = document.createElement('li');
-                const productSpan = document.createElement('span');
-                productSpan.textContent = product.title;
-                listItem.appendChild(productSpan);
-
-                const deleteButton = document.createElement('button'); 
-                deleteButton.textContent = 'Eliminar'; 
-                deleteButton.addEventListener('click', () => {
-                    deleteProduct(product.id); 
-                });
-                listItem.appendChild(deleteButton);
-
-                listItem.setAttribute('data-product-id', product.id);
-
-                productList.appendChild(listItem);
-            });
-        }
-
-        function addProduct(newProduct) {
-            const productList = document.getElementById('product-list');
-            const listItem = document.createElement('li');
-            const productSpan = document.createElement('span');
-            productSpan.textContent = newProduct.title;
-            listItem.appendChild(productSpan);
-
-            const deleteButton = createDeleteButton(newProduct.id);
-            listItem.appendChild(deleteButton);
-
-            productList.appendChild(listItem);
-
-            productList.appendChild(listItem);
-        }
-
-        function createDeleteButton(productId) {
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Eliminar';
-            deleteButton.addEventListener('click', () => {
-                const listItem = deleteButton.parentNode;
-                listItem.remove(); 
-                socket.emit('delete product', productId)
-            });
-
-            
-            return deleteButton;
-        }
-
-        function deleteProduct(productId) {
-            const productList = document.getElementById('product-list');
-            const listItem = document.querySelector(`li[data-product-id="${productId}"]`);
-
-            if (listItem) {
-                productList.removeChild(listItem);
-            }
-
-            socket.emit('delete product', productId)
-        }
+       
 
 
-        const addProductButton = document.getElementById('add-product-button');
-        addProductButton.addEventListener('click', () => {
-            const productNameInput = document.getElementById('product-name-input');
-            const productName = productNameInput.value;
-            if (productName.trim() !== '') {
-                const newProduct = { id: Date.now(), title: productName };
-                addProduct(newProduct);
-                socket.emit('new product', newProduct); 
-                productNameInput.value = '';
-            }
-        });
+
+      const agregarProducto = document.getElementById('agregar-producto');
+      agregarProducto.addEventListener('click', () => {
+        const nuevoProducto = document.getElementById('nuevo-producto').value;
+        socket.emit('agregarProducto', nuevoProducto);
+      });
     </script>
 </div>
